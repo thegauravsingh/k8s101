@@ -1,0 +1,22 @@
+---
+# Source: micro-backend/templates/ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: RELEASE-NAME-micro-backend
+  labels:
+    app.kubernetes.io/name: micro-backend
+    helm.sh/chart: micro-backend-0.1.0
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - host: "k8.cluster.com"
+      http:
+        paths:
+          - path: /api/.*
+            backend:
+              serviceName: RELEASE-NAME-micro-backend
+              servicePort: http

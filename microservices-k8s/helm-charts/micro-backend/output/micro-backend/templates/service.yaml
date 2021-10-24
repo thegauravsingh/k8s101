@@ -1,0 +1,23 @@
+---
+# Source: micro-backend/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: RELEASE-NAME-micro-backend
+  labels:
+    helm.sh/chart: micro-backend-0.1.0
+    app.kubernetes.io/name: micro-backend
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+      nodePort: 30222      
+  selector:
+    app.kubernetes.io/name: micro-backend
+    app.kubernetes.io/instance: RELEASE-NAME

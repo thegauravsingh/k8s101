@@ -1,0 +1,22 @@
+---
+# Source: micro-frontend/templates/ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: RELEASE-NAME-micro-frontend
+  labels:
+    app.kubernetes.io/name: micro-frontend
+    helm.sh/chart: micro-frontend-0.1.0
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - host: "k8.cluster.com"
+      http:
+        paths:
+          - path: /app/.*
+            backend:
+              serviceName: RELEASE-NAME-micro-frontend
+              servicePort: http

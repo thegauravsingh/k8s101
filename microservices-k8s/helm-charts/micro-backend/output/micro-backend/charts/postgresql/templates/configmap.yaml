@@ -1,0 +1,16 @@
+---
+# Source: micro-backend/charts/postgresql/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: RELEASE-NAME-postgresql-configuration
+  labels:
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: postgresql-10.2.0
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+data:
+  pg_hba.conf: |
+    local all all trust
+    host all all localhost trust
+    host microservice micro all password

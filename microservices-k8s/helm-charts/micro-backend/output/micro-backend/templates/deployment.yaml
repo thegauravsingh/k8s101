@@ -1,0 +1,45 @@
+---
+# Source: micro-backend/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: RELEASE-NAME-micro-backend
+  labels:
+    app.kubernetes.io/name: micro-backend
+    helm.sh/chart: micro-backend-0.1.0
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: micro-backend
+      app.kubernetes.io/instance: RELEASE-NAME
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: micro-backend
+        app.kubernetes.io/instance: RELEASE-NAME
+    spec:
+      containers:
+        - name: micro-backend
+          image: "gauravsingh1012/backend-app:v0.0.1"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: "PSQL_DB_ADDRESS"
+              value: "micro-backend-postgresql"    
+
+          livenessProbe:
+            httpGet:
+              path: "/api/isalive"
+              port: 8000
+          readinessProbe:
+            httpGet:
+              path: "/api/isalive"
+              port: 8000
+          resources:
+            {}

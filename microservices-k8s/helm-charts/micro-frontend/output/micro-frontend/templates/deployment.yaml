@@ -1,0 +1,41 @@
+---
+# Source: micro-frontend/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: RELEASE-NAME-micro-frontend
+  labels:
+    app.kubernetes.io/name: micro-frontend
+    helm.sh/chart: micro-frontend-0.1.0
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: micro-frontend
+      app.kubernetes.io/instance: RELEASE-NAME
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: micro-frontend
+        app.kubernetes.io/instance: RELEASE-NAME
+    spec:
+      containers:
+        - name: micro-frontend
+          image: "gauravsingh1012/frontend-app:v0.0.1"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /app
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /app
+              port: http
+          resources:
+            {}

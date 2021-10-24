@@ -1,0 +1,13 @@
+---
+# Source: micro-backend/templates/pvc_micro.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: data-backend-postgresql-0
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
